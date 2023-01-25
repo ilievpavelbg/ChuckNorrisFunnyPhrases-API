@@ -6,13 +6,16 @@ using System.Diagnostics;
 
 namespace ChuckNorrisFunnyPhrases_API.Controllers
 {
+
     public class HomeController : Controller
     {
+        private readonly IConfiguration _configuration;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
         {
             _logger = logger;
+            _configuration = configuration;
         }
 
         public async Task<IActionResult> Index()
@@ -25,9 +28,9 @@ namespace ChuckNorrisFunnyPhrases_API.Controllers
                 RequestUri = new Uri("https://matchilling-chuck-norris-jokes-v1.p.rapidapi.com/jokes/random"),
                 Headers =
     {
-        { "accept", "application/json" },
-        { "X-RapidAPI-Key", "1415573fffmsh9674e2af201b09cp1b1186jsna63e82e106ac" },
-        { "X-RapidAPI-Host", "matchilling-chuck-norris-jokes-v1.p.rapidapi.com" },
+       { "accept", _configuration["Accept:accept"] },
+        { "X-RapidAPI-Key", _configuration["Key:X-RapidAPI-Key"] },
+        { "X-RapidAPI-Host", _configuration["Host:X-RapidAPI-Host"] },
     },
             };
             using (var response = await client.SendAsync(request))
@@ -35,7 +38,7 @@ namespace ChuckNorrisFunnyPhrases_API.Controllers
                 response.EnsureSuccessStatusCode();
                 var body = await response.Content.ReadAsStringAsync();
                 phrase = JsonConvert.DeserializeObject<Phrase>(body);
-                
+
             }
 
             ViewData.Model = phrase;

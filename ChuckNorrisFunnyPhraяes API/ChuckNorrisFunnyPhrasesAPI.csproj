@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>ChuckNorrisFunnyPhraяes_API</RootNamespace>
+    <UserSecretsId>f1eabaee-dd50-44ea-b492-dfca8a988cad</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
